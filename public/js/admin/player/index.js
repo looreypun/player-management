@@ -1,5 +1,4 @@
-new Vue({
-  el:'#player-index',
+Vue.createApp({
   components: {
       pagination: pagination,
   },
@@ -25,10 +24,12 @@ new Vue({
           };
           row.edit_mode = true;
           this.editMode = true;
+          console.log(row);
       },
       // add player
       add() {
           this.errors = {};
+          this.filters = {};
 
           if (!this.register.name) {
               this.errors.name = 'Enter name';
@@ -144,4 +145,4 @@ new Vue({
   mounted() {
       this.load(1);
   },
-});
+}).mount('#player-index');
