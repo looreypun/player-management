@@ -1,4 +1,5 @@
-Vue.createApp({
+new Vue({
+  el:'#player-index',
   components: {
       pagination: pagination,
   },
@@ -143,4 +144,4 @@ Vue.createApp({
   mounted() {
       this.load(1);
   },
-}).mount('#player-index');
+});
