@@ -29,7 +29,6 @@ Vue.createApp({
       // add player
       add() {
           this.errors = {};
-          this.filters = {};
 
           if (!this.register.name) {
               this.errors.name = 'Enter name';

@@ -22,6 +22,7 @@
                     <div class="col-md-4 form-group">
                         <label for="title">Name</label>
                         <input type="text" class="form-control" name="name" v-model="filters.name" placeholder="Player Name" autocomplete="off" />
+                        <input style="border:none; outline:none" readonly type="text" name="" id="">
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="status">Position</label>
