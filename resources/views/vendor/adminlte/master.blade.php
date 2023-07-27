@@ -99,6 +99,9 @@
     <!-- Axios CDN link -->
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.4/dist/axios.min.js"></script>
 
+    <!-- Underscore CDN link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js" integrity="sha512-2V49R8ndaagCOnwmj8QnbT1Gz/rie17UouD9Re5WxbzRVUGoftCu5IuqqtAM9+UC3fwfHCSJR1hkzNQh/2wdtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script src="{{ asset('js/admin/pagination.js') }}"></script>
 
     {{-- Livewire Script --}}

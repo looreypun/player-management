@@ -56,7 +56,7 @@ class User extends Authenticatable
             $query->where('users.position_id', $filter['position_id']);
         }
 
-        return $query->orderByDesc('id')->paginate($limit);
+        return $query->paginate($limit);
     }
 
     /**

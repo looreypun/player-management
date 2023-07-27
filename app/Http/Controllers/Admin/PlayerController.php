@@ -32,7 +32,7 @@ class PlayerController extends Controller
         $filter = $request->all();
 
         $users = new User();
-        $users = $users->paginateWithFilter($filter, 20);
+        $users = $users->paginateWithFilter($filter, 10);
         return response()->json($users);
     }
 

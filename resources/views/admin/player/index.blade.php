@@ -131,9 +131,9 @@
                         </div>
 
                         {{-- ページネーション --}}
-                        {{-- <div class="card-footer small">
+                         <div class="card-footer small">
                             <pagination :data="response" @click-page-link="clickPageLink"></pagination>
-                        </div> --}}
+                        </div>
                     </template>
                 </template>
 
