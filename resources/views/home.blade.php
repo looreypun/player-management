@@ -3,22 +3,24 @@
 
 @section('title', 'Dashboard')
 
-@section('css')
-    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
-    {{-- yeha chai css --}}
-@stop
-
 @section('content_header')
   <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
   <h1>Dashboard</h1>
 @stop
 
 @section('content')
-{{-- yeha chai timro main code haru --}}
-@stop
-
-@section('js')
-<scirp>
-    {{-- yesko vitra script --}}
-</scirp>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-center">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Welcome to the Dashboard</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Hello there!</p>
+                    <p class="card-text">Feel free to explore the dashboard and manage your account.</p>
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop

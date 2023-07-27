@@ -21,7 +21,7 @@
                 <div class="card-body small row">
                     <div class="col-md-4 form-group">
                         <label for="title">Name</label>
-                        <input type="text" class="form-control" id="title" name="name" v-model="filters.name" placeholder="Player Name" />
+                        <input type="text" class="form-control" name="name" v-model="filters.name" placeholder="Player Name" autocomplete="off" />
                     </div>
                     <div class="col-md-4 form-group">
                         <label for="status">Position</label>
@@ -60,6 +60,7 @@
                                         <th>NAME</th>
                                         <th>EMAIL</th>
                                         <th>PHONE</th>
+                                        <th>AGE</th>
                                         <th>POSITION</th>
                                         <th>IMAGE</th>
                                         <th>ACTION</th>
@@ -111,6 +112,7 @@
                                             <td>@{{ row.name }}</td>
                                             <td>@{{ row.email }}</td>
                                             <td>@{{ row.phone }}</td>
+                                            <td>@{{ calculateAge(row.age) }}</td>
                                             <td>@{{ row.position }}</td>
                                             <td><img :src="row.img_url" class="img-thumbnail rounded" alt="user image" style="height:30px; width:30px"></td>
                                             <td class="text-nowrap">
@@ -154,6 +156,10 @@
                                 <div class="form-group">
                                     <input type="email" class="form-control d-inline" name="email" v-model="register.email" :class="{ 'is-invalid': errors.email }" placeholder="Email" />
                                     <div v-if="errors.email" class="error invalid-feedback mb-2" style="display: block;">@{{ errors.email }}</div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control d-inline" name="age" v-model="register.age" :class="{ 'is-invalid': errors.age }" onfocus="(this.type='date')" placeholder="Date of birth" />
+                                    <div v-if="errors.age" class="error invalid-feedback mb-2" style="display: block;">@{{ errors.age }}</div>
                                 </div>
                                 <div class="form-group">
                                     <input type="tel" class="form-control d-inline" name="phone" v-model="register.phone" :class="{ 'is-invalid': errors.phone }" placeholder="Phone" />

@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'REDZONE',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => '<b>REDZONE</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/RedzoneLogo.png',
+    'logo_img_class' => 'brand-image img-circle elevation-3 bg-dark',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt' => 'Redzone Logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -305,6 +305,12 @@ return [
         [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
+        ],
+        [
+            'text' => 'DASHBOARD',
+            'icon'       => 'fa fa-chart-line',
+            'icon_color' => 'aqua',
+            'url'  => 'admin/dashboard',
         ],
         [
             'text'      => 'PLAYERS',

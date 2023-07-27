@@ -125,6 +125,13 @@ Vue.createApp({
               }, 3000);
           }
       },
+      // age calculation
+      calculateAge(dob) {
+          const birthYear = new Date(dob).getFullYear();
+          const currentYear = new Date().getFullYear();
+          const age = currentYear - birthYear;
+          return age;
+      },
       clickPageLink(page) {
           this.load(page);
       },

@@ -49,6 +49,7 @@ class PlayerController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'age' => $request->age,
             'phone' => $request->phone,
             'position_id' => $request->position_id,
             'img_url' => $request->img_url
