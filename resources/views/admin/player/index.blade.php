@@ -57,12 +57,12 @@
                             <table class="table table-striped table-sm">
                                 <thead class="small">
                                     <tr>
-                                        <th>ID</th>
                                         <th>NAME</th>
                                         <th>EMAIL</th>
                                         <th>PHONE</th>
                                         <th>AGE</th>
                                         <th>POSITION</th>
+                                        <th>PERMISSION</th>
                                         <th>IMAGE</th>
                                         <th>ACTION</th>
                                     </tr>
@@ -70,7 +70,6 @@
                                 <tbody>
                                     <tr v-for="row in response.data" :key="row.id">
                                         <template v-if="row.edit_mode">
-                                            <td>@{{ row.id }}</td>
                                             <td>
                                                 <input type="text" class="form-control d-inline" name="name" v-model="row.name" :class="{ 'is-invalid': errors.name }" />
                                                 <div v-if="errors.name" class="error invalid-feedback mb-2" style="display: block;">@{{ errors.name }}</div>
@@ -85,13 +84,28 @@
                                             </td>
                                             <td>
                                                 <div class="form-group">
+                                                    <input type="text" class="form-control d-inline" name="age" v-model="row.age" :class="{ 'is-invalid': errors.age }" onfocus="(this.type='date')" placeholder="Date of birth" />
+                                                    <div v-if="errors.age" class="error invalid-feedback mb-2" style="display: block;">@{{ errors.age }}</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
                                                     <select name="position" class="form-control" v-model="row.position_id" :class="{ 'is-invalid': errors.position }">
-                                                        <option value="">ALL</option>
                                                         @foreach ($positions as $position)
                                                             <option value="{{ $position->id }}">{{ $position->name }}</option>
                                                         @endforeach
                                                     </select>
                                                     <div v-if="errors.position" class="error invalid-feedback mb-2" style="display: block;">@{{ errors.position }}</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <select name="permission" class="form-control" v-model="permission_id" :class="{ 'is-invalid': errors.permission }">
+                                                        @foreach ($permissions as $permission)
+                                                            <option value="{{ $permission->name }}">{{ $permission->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div v-if="errors.permission" class="error invalid-feedback mb-2" style="display: block;">@{{ errors.permission }}</div>
                                                 </div>
                                             </td>
                                             <td>
@@ -109,15 +123,15 @@
                                         </template>
 
                                         <template v-else>
-                                            <td>@{{ row.id }}</td>
                                             <td>@{{ row.name }}</td>
                                             <td>@{{ row.email }}</td>
                                             <td>@{{ row.phone }}</td>
                                             <td>@{{ calculateAge(row.age) }}</td>
                                             <td>@{{ row.position }}</td>
+                                            <td>@{{ row.permissions[0]?.name }}</td>
                                             <td><img :src="row.img_url" class="img-thumbnail rounded" alt="user image" style="height:30px; width:30px"></td>
                                             <td class="text-nowrap">
-                                                <button type="button" class="btn btn-info btn-sm mr-2" @click="edit(row)">
+                                                <button :disabled="editMode" type="button" class="btn btn-info btn-sm mr-2" @click="edit(row)">
                                                     <i class="fas fa-fw fa-edit"></i> Edit
                                                 </button>
                                                 <button type="button" class="btn btn-danger btn-sm mr-2" @click="remove(row.id)">
@@ -143,7 +157,7 @@
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header bg-danger">
                                 <h5 class="modal-title text-end">ADD PLAYER</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -179,13 +193,22 @@
                                     <div v-if="errors.verify_password" class="error invalid-feedback mb-2" style="display: block;">@{{ errors.verify_password }}</div>
                                 </div>
                                 <div class="form-group">
-                                    <select name="position" class="form-control" v-model="register.position_id" :class="{ 'is-invalid': errors.position }" placeholder="Position">
-                                        <option value="">ALL</option>
+                                    <select name="position" class="form-control" v-model="position_id" :class="{ 'is-invalid': errors.position }">
+                                        <option value="0">Select Position</option>
                                         @foreach ($positions as $position)
                                             <option value="{{ $position->id }}">{{ $position->name }}</option>
                                         @endforeach
                                     </select>
                                     <div v-if="errors.position" class="error invalid-feedback mb-2" style="display: block;">@{{ errors.position }}</div>
+                                </div>
+                                <div class="form-group">
+                                    <select name="permission" class="form-control" v-model="permission_id" :class="{ 'is-invalid': errors.permission }">
+                                        <option value="">Select Permission</option>
+                                        @foreach ($permissions as $permission)
+                                            <option value="{{ $permission->name }}">{{ $permission->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div v-if="errors.permission" class="error invalid-feedback mb-2" style="display: block;">@{{ errors.permission }}</div>
                                 </div>
                             </div>
                             <div class="modal-footer">

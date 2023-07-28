@@ -11,8 +11,6 @@ Vue.createApp({
             alertType: 'info',
             filters: {},
             register: {},
-            position_id: 0,
-            permission_id: '',
             errors: {},
             response: {}
         };
@@ -22,116 +20,82 @@ Vue.createApp({
         edit(row) {
             row.org = {
                 name: row.name,
-                email: row.email,
-                phone: row.phone,
-                age: row.age,
-                position: row.position,
-                img_url: row.img_url
+                amount: row.amount,
+                memo: row.memo
             };
             row.edit_mode = true;
             this.editMode = true;
-            this.permission_id = row.permissions[0]?.name;
-            console.log(row);
         },
-        // add player
+        // add position
         add() {
             this.errors = {};
 
             if (!this.register.name) {
-                this.errors.name = 'Enter name';
+                this.errors.name = 'Enter User name';
                 return;
-            }
-            if (!this.register.email) {
-                this.errors.email = 'Enter email';
-                return;
-            }
-            if (!this.register.password) {
-                this.errors.password = 'Enter password';
-                return;
-            }
-            if (!this.register.verify_password) {
-                this.errors.verify_password = 'Confirm password';
-                return;
-            }
-            if (this.register.password !== this.register.verify_password) {
-                this.errors.verify_password = 'Password did not match';
+            } if (!this.register.amount) {
+                this.errors.amount = 'Enter Amount';
                 return;
             }
 
-            if (!this.permission_id) {
-                this.errors.permission = 'Select permission';
-                return;
-            }
-
-            this.register.permission_id = this.permission_id;
-            this.register.position_id = this.position_id;
-
-            axios.post('/admin/player', this.register)
+            axios.post('/admin/contribution', this.register)
                 .then(response => {
                     this.register = {};
-                    this.permission_id = 0;
-                    this.position_id = 0;
                     this.toggleAlert(response.data.message);
                     this.load();
                     $('#register').modal('hide');
                 })
                 .catch(error => {
                     console.warn(error);
-                    this.toggleAlert('Failed to add  user', 'error');
+                    this.toggleAlert('Failed to add  data', 'error');
                 });
         },
-        // update player info
+        // update position info
         save(row) {
             this.errors = {};
+
             if (!row.name) {
-                this.errors.name = 'Enter name';
+                this.errors.name = 'Enter User name';
                 return;
             }
-            if (!row.email) {
-                this.errors.email = 'Enter email';
+
+            if (!row.amount) {
+                this.errors.amount = 'Enter Amount';
                 return;
             }
-            if (!this.permission_id) {
-                this.errors.permission = 'Select permission';
-                return;
-            }
-            row.permission_id = this.permission_id;
-            axios.put('/admin/player/' + row.id, row)
+
+            axios.put('/admin/contribution/' + row.id, row)
                 .then(response => {
-                    this.permission_id = 0;
                     this.toggleAlert(response.data.message);
                     row.edit_mode = false;
                     this.editMode = false;
-                    this.load(this.response.current_page);
+                    this.load();
                 })
                 .catch(error => {
                     console.warn(error);
-                    this.toggleAlert('Failed to update user', 'error');
+                    this.toggleAlert('Failed to update data', 'error');
                 });
         },
         // delete user info
         remove(id) {
-            if (!confirm('Are you sure you want to delete user?')) {
+            if (!confirm('Are you sure you want to delete data?')) {
                 return;
             }
-            axios.delete('/admin/player/' + id)
+            axios.delete('/admin/contribution/' + id)
                 .then(response => {
                     this.toggleAlert(response.data.message);
-                    this.load(this.response.current_page);
+                    this.load();
                 })
                 .catch(error => {
                     console.warn(error);
-                    this.toggleAlert('Failed to delete user', 'error');
+                    this.toggleAlert('Failed to delete data', 'error');
                 });
         },
         // cancel edit
         cancel(row) {
-            row.name = row.org.name,
-                row.email = row.org.email,
-                row.phone = row.org.phone,
-                row.age = row.org.age,
-                row.position = row.org.position,
-                row.img_url = row.org.img_url
+            row.name = row.org.name;
+            row.amount = row.org.amount;
+            row.memo = row.org.memo;
             row.edit_mode = false;
             this.editMode = false;
             this.errors = {};
@@ -152,19 +116,12 @@ Vue.createApp({
                 }, 3000);
             }
         },
-        // age calculation
-        calculateAge(dob) {
-            const birthYear = new Date(dob).getFullYear();
-            const currentYear = new Date().getFullYear();
-            const age = currentYear - birthYear;
-            return age;
-        },
         clickPageLink(page) {
             this.load(page);
         },
-        // load player list
+        // load position list
         load(page) {
-            axios.post(`/admin/player/search?page=${page}`, this.filters)
+            axios.post(`/admin/contribution/search?page=${page}`, this.filters)
                 .then(response => {
                     console.log(response);
                     this.response = response.data;
@@ -179,4 +136,4 @@ Vue.createApp({
     mounted() {
         this.load(1);
     },
-}).mount('#player-index');
+}).mount('#contribution-index');

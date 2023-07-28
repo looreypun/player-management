@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -32,9 +33,9 @@ class User extends Authenticatable
      * paginator for user
      * @param $filter
      * @param $limit
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
-    public function paginateWithFilter($filter, $limit)
+    public function paginateWithFilter($filter, $limit): LengthAwarePaginator
     {
         $query = $this->query()->leftJoin('positions', 'users.position_id', 'positions.id')
                 ->selectRaw('
@@ -56,7 +57,7 @@ class User extends Authenticatable
             $query->where('users.position_id', $filter['position_id']);
         }
 
-        return $query->paginate($limit);
+        return $query->orderBy('id', 'DESC')->with('permissions')->paginate($limit);
     }
 
     /**

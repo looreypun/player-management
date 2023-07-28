@@ -130,9 +130,9 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => false,
-    'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
+    'usermenu_header' => true,
+    'usermenu_header_class' => 'bg-dark',
+    'usermenu_image' => true,
     'usermenu_desc' => false,
     'usermenu_profile_url' => false,
 
@@ -167,12 +167,12 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
-    'classes_auth_header' => '',
-    'classes_auth_body' => '',
-    'classes_auth_footer' => '',
-    'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_card' => 'bg-gradient-dark',
+    'classes_auth_header' => 'bg-gradient-dark',
+    'classes_auth_body' => 'bg-gradient-dark',
+    'classes_auth_footer' => 'bg-gradient-dark text-center',
+    'classes_auth_icon' => 'fa-fw text-light',
+    'classes_auth_btn' => 'btn-flat btn-light rounded',
 
     /*
     |--------------------------------------------------------------------------
@@ -187,7 +187,7 @@ return [
     */
 
     'classes_body' => '',
-    'classes_brand' => '',
+    'classes_brand' => 'bg-danger',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
@@ -309,19 +309,45 @@ return [
         [
             'text' => 'DASHBOARD',
             'icon'       => 'fa fa-chart-line',
-            'icon_color' => 'aqua',
             'url'  => 'admin/dashboard',
         ],
+        'PLAYER INFO SECTION',
         [
             'text'      => 'PLAYERS',
             'icon'       => 'fa fa-users',
-            'icon_color' => 'aqua',
             'guard'      => 'all_allow|admins.index',
             'url'      => 'admin/player',
-            'permission' => [
-                'admin'
-            ],
         ],
+        [
+            'text'      => 'CONTRIBUTION',
+            'icon'       => 'fa fa-yen-sign',
+            'guard'      => 'all_allow|admins.index',
+            'url'      => 'admin/contribution',
+        ],
+        'CONFIGURATION SECTION',
+        [
+            'text'    => 'CONFIGURATION',
+            'icon'       => 'fa fa-cog',
+            'active' => [],
+            'permission' => [
+                'ADMIN'
+            ],
+            'submenu' => [
+                [
+                    'text'      => 'POSITION',
+                    'icon'       => 'fa fa-chart-pie',
+                    'active' => ['admin/position', 'admin/position/*'],
+                    'guard'      => 'all_allow|admins.index',
+                    'url'      => 'admin/position',
+                ],                [
+                    'text'      => 'PERMISSION',
+                    'icon'       => 'fa fa-key',
+                    'active' => ['admin/permission', 'admin/permission/*'],
+                    'guard'      => 'all_allow|admins.index',
+                    'url'      => 'admin/permission',
+                ],
+            ],
+        ]
     ],
 
     /*

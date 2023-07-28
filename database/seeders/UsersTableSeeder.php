@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
                 'email_verified_at' => now(),
-                'password' => bcrypt('password123'), // You can set a default password here
+                'password' => bcrypt('administrator'), // You can set a default password here
                 'age' => $faker->date('Y-m-d', '2000-01-01'), // Random date of birth
                 'phone' => $faker->phoneNumber,
                 'img_url' => $faker->imageUrl(200, 200, 'people', true),

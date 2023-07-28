@@ -9,6 +9,8 @@ class Position extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function players()
     {
         return $this->hasMany(User::class);

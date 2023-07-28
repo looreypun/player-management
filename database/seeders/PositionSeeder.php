@@ -15,6 +15,9 @@ class PositionSeeder extends Seeder
     public function run()
     {
         $positions = [
+            ['name' => 'Leader'],
+            ['name' => 'Manager'],
+            ['name' => 'Sponsor'],
             ['name' => 'Goalkeeper'],
             ['name' => 'Defender'],
             ['name' => 'Midfielder'],

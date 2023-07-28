@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Permission;
 use App\Models\Position;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -16,10 +17,11 @@ class PlayerController extends Controller
      * player list
      * @return View
      */
-    public function index()
+    public function index(): View
     {
         $positions = Position::all();
-        return view('admin.player.index', compact('positions'));
+        $permissions = Permission::all();
+        return view('admin.player.index', compact('positions', 'permissions'));
     }
 
     /**
@@ -30,7 +32,6 @@ class PlayerController extends Controller
     public function search(Request $request): JsonResponse
     {
         $filter = $request->all();
-
         $users = new User();
         $users = $users->paginateWithFilter($filter, 10);
         return response()->json($users);
@@ -44,7 +45,6 @@ class PlayerController extends Controller
     public function store(Request $request): JsonResponse
     {
         $player = new User();
-
         $player->fill([
             'name' => $request->name,
             'email' => $request->email,
@@ -54,8 +54,8 @@ class PlayerController extends Controller
             'position_id' => $request->position_id,
             'img_url' => $request->img_url
         ]);
-
         $player->save();
+        $player->givePermissionTo($request->permission_id);
 
         return response()->json(['message' => 'Player Added Successfully']);
     }
@@ -72,6 +72,9 @@ class PlayerController extends Controller
         $player->fill($request->all());
         $player->save();
 
+        $player->permissions()->detach();
+        $player->givePermissionTo($request->permission_id);
+
         return response()->json(['message' => 'Player info updated']);
     }
 
@@ -80,9 +83,10 @@ class PlayerController extends Controller
      * @param $id
      * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $user = User::find($id);
+        $user->permissions()->detach();
         $user->delete();
 
         return response()->json(['message' => 'Player info deleted']);
