@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => '<b>REDZONE</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/RedzoneLogo.png',
+    'logo_img' => 'images/RedzoneLogo2.png',
     'logo_img_class' => 'brand-image img-circle elevation-3 bg-dark',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -84,11 +84,11 @@ return [
     */
 
     'auth_logo' => [
-        'enabled' => false,
+        'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'images/RedzoneLogo2.png',
             'alt' => 'Auth Logo',
-            'class' => '',
+            'class' => 'img-circle bg-secondary',
             'width' => 50,
             'height' => 50,
         ],
@@ -133,8 +133,8 @@ return [
     'usermenu_header' => true,
     'usermenu_header_class' => 'bg-dark',
     'usermenu_image' => true,
-    'usermenu_desc' => false,
-    'usermenu_profile_url' => false,
+    'usermenu_desc' => true,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -192,7 +192,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-dark-gray elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',

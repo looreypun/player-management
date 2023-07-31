@@ -15,7 +15,7 @@ class ContributionsSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             Contribution::create([
                 'name' => $faker->name,
                 'amount' => $faker->randomFloat(2, 100, 10000),

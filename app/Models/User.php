@@ -10,6 +10,13 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * Class User
+ *
+ * This class represents a user in the application.
+ *
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -79,4 +86,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * user menu description
+     * @return string
+     */
+    public function adminlte_desc()
+    {
+        return $this->email;
+    }
+
+    public function adminlte_profile_url()
+    {
+        return $this->img_url;
+    }
 }
