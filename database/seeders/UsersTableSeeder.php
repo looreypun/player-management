@@ -20,7 +20,9 @@ class UsersTableSeeder extends Seeder
             ['id' => 1, 'name' => 'redzone', 'email' => 'redzone.dev@gmail.com', 'password' => Hash::make('administrator'), 'img_url' => 'https://images.pexels.com/photos/11608681/pexels-photo-11608681.jpeg?auto=compress&cs=tinysrgb&w=1600', 'age' => '1995-05-16', 'position_id' => 2, 'phone' => '08076504242', 'created_at' => '2023-07-25 03:06:47', 'updated_at' => '2023-07-25 03:06:47'],
         ]);
 
-        $client = new Client();
+        $client = new Client([
+            'verify' => false, // Disable SSL certificate verification
+        ]);
 
         for ($i = 0; $i < 100; $i++) {
             // Make a request to the RandomUser.me API
