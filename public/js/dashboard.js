@@ -1,3 +1,4 @@
+let delayed;
 const contribution = document.getElementById("contribution");
 const position = document.getElementById("position");
 
@@ -14,9 +15,12 @@ const contributionChart = new Chart(contribution, {
         }]
     },
     options: {
-        animation: {
-            duration: 2000,
-            easing: 'easeOutQuart',
+        animations: {
+            radius: {
+                duration: 400,
+                easing: 'linear',
+                loop: (context) => context.active
+            }
         },
         plugins: {
             legend: {
@@ -46,8 +50,24 @@ const positionChart = new Chart(position, {
     },
     options: {
         animation: {
-            duration: 2000,
-            easing: 'easeOutQuart',
+            onComplete: () => {
+                delayed = true;
+            },
+            delay: (context) => {
+                let delay = 0;
+                if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                }
+                return delay;
+            },
+        },
+        scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true
+            }
         },
         plugins: {
             legend: {
