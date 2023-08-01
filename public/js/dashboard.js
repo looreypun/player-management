@@ -1,13 +1,12 @@
-var trafficchart = document.getElementById("trafficflow");
-var saleschart = document.getElementById("sales");
+const contribution = document.getElementById("contribution");
+const position = document.getElementById("position");
 
-// new
-var myChart1 = new Chart(trafficchart, {
+const contributionChart = new Chart(contribution, {
     type: 'line',
     data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: contChartLabels,
         datasets: [{
-            data: ['1135', '1135', '1140', '1168', '1150', '1145', '1155', '1155', '1150', '1160', '1185', '1190'],
+            data: contChartData,
             backgroundColor: "rgba(48, 164, 255, 0.2)",
             borderColor: "rgba(48, 164, 255, 0.8)",
             fill: true,
@@ -26,21 +25,20 @@ var myChart1 = new Chart(trafficchart, {
             },
             title: {
                 display: true,
-                text: 'Number of Visitors',
+                text: 'Contributed Amounts',
                 position: 'left',
             },
         },
     }
 });
 
-// new
-var myChart2 = new Chart(saleschart, {
+const positionChart = new Chart(position, {
     type: 'bar',
     data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: posChartLabels,
         datasets: [{
             label: 'Income',
-            data: ["280", "300", "400", "600", "450", "400", "500", "550", "450", "650", "950", "1000"],
+            data: posChartData,
             backgroundColor: "rgba(76, 175, 80, 0.5)",
             borderColor: "#6da252",
             borderWidth: 1,
@@ -58,7 +56,7 @@ var myChart2 = new Chart(saleschart, {
             },
             title: {
                 display: true,
-                text: 'Number of Sales',
+                text: 'Number of Users',
                 position: 'left',
             },
         },

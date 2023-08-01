@@ -2,28 +2,20 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-/**
- * Class User
- *
- * This class represents a user in the application.
- *
- * @package App\Models
- */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array<int, string>
      */
     protected $fillable = [
@@ -68,8 +60,55 @@ class User extends Authenticatable
     }
 
     /**
+     * Returns the count of users based on their positions.
+     * @return array
+     */
+    public function getUsersCount(): array
+    {
+        $query = $this->query()->leftJoin('positions', 'users.position_id', '=', 'positions.id')
+            ->select('users.position_id');
+
+        $leaderCount = clone $query;
+        $leaders = $leaderCount->where('users.position_id', config('const.position.Leader'))->count();
+
+        $managerCount = clone $query;
+        $managers = $managerCount->where('users.position_id', config('const.position.Manager'))->count();
+
+        $sponsorCount = clone $query;
+        $sponsors = $sponsorCount->where('users.position_id', config('const.position.Sponsor'))->count();
+
+        $users = $query->count();
+        return [$leaders, $managers, $sponsors, $users];
+    }
+
+    /**
+     * Returns an array containing the chart data based on the users' positions.
+     * The returned array has two keys:
+     * - 'labels': An array of position names.
+     * - 'data': An array of user counts corresponding to each position.
+     * @return array The chart data.
+     */
+    public function getChartData(): array
+    {
+        $positions = Position::withCount('users')->get();
+
+        $labels = $positions->pluck('name')->toArray();
+        $data = $positions->pluck('users_count')->toArray();
+
+        return ['labels' => $labels, 'data' => $data];
+    }
+
+    /**
+     * Returns the position of the user.
+     * @return BelongsTo
+     */
+    public function position(): BelongsTo
+    {
+        return $this->belongsTo(Position::class, 'position_id');
+    }
+
+    /**
      * The attributes that should be hidden for serialization.
-     *
      * @var array<int, string>
      */
     protected $hidden = [
@@ -79,7 +118,6 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be cast.
-     *
      * @var array<string, string>
      */
     protected $casts = [
@@ -91,12 +129,16 @@ class User extends Authenticatable
      * user menu description
      * @return string
      */
-    public function adminlte_desc()
+    public function adminlte_desc(): string
     {
         return $this->email;
     }
 
-    public function adminlte_profile_url()
+    /**
+     * Returns the URL of the AdminLTE profile image.
+     * @return string
+     */
+    public function adminlte_profile_url(): string
     {
         return $this->img_url;
     }

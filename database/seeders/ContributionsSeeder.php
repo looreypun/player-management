@@ -16,10 +16,16 @@ class ContributionsSeeder extends Seeder
         $faker = Faker::create();
 
         for ($i = 0; $i < 50; $i++) {
+            // Generating random timestamps for the current year
+            $startDate = $faker->dateTimeThisYear;
+            $endDate = $faker->dateTimeBetween($startDate, 'now');
+
             Contribution::create([
                 'name' => $faker->name,
                 'amount' => $faker->randomFloat(2, 100, 10000),
                 'memo' => $faker->sentence,
+                'created_at' => $startDate,
+                'updated_at' => $endDate,
             ]);
         }
     }

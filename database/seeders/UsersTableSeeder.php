@@ -39,11 +39,31 @@ class UsersTableSeeder extends Seeder
                 'age' => date('Y-m-d', strtotime($user['dob']['date'])),
                 'phone' => $user['phone'],
                 'img_url' => $user['picture']['large'],
-                'position_id' => rand(1, 4), // You can set a default position ID here
+                'position_id' => $this->generatePositionId(), // You can set a default position ID here
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
         }
+    }
+
+    /**
+     * Generates a random position ID based on probability.
+     * @return int The generated position ID.
+     */
+    private function generatePositionId(): int
+    {
+        // 20% chance of position_id being 1, 2, or 3 (rarely 1-3)
+        if (rand(1, 100) <= 20) {
+            return rand(1, 3);
+        }
+
+        // 10% chance of position_id being 4 or less (rarely 4)
+        if (rand(1, 100) <= 10) {
+            return rand(1, 4);
+        }
+
+        // 70% chance of position_id being 5 or more (normal distribution for higher position IDs)
+        return rand(5, 7);
     }
 }
