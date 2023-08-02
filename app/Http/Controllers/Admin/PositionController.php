@@ -36,9 +36,9 @@ class PositionController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $player = new Position();
-        $player->fill($request->all());
-        $player->save();
+        $position = new Position();
+        $position->fill($request->all());
+        $position->save();
 
         return response()->json(['message' => 'Position Added Successfully']);
     }
@@ -51,9 +51,9 @@ class PositionController extends Controller
      */
     public function update($id, Request $request): JsonResponse
     {
-        $player = Position::find($id);
-        $player->fill($request->all());
-        $player->save();
+        $position = Position::find($id);
+        $position->fill($request->all());
+        $position->save();
 
         return response()->json(['message' => 'Position info updated']);
     }

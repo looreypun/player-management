@@ -22,10 +22,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'img_url',
         'age',
+        'phone',
+        'img_url',
         'position_id',
-        'phone'
+        'desc'
     ];
 
     /**
@@ -131,7 +132,7 @@ class User extends Authenticatable
      */
     public function adminlte_desc(): string
     {
-        return $this->email;
+        return $this->desc;
     }
 
     /**

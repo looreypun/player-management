@@ -9,7 +9,9 @@ Vue.createApp({
             showAlert: false,
             message: '',
             alertType: 'info',
-            filters: {},
+            filters: {
+                position_id: ''
+            },
             register: {},
             position_id: 0,
             permission_id: '',
@@ -33,7 +35,7 @@ Vue.createApp({
             this.permission_id = row.permissions[0]?.name;
             console.log(row);
         },
-        // add player
+        // add member
         add() {
             this.errors = {};
 
@@ -66,7 +68,7 @@ Vue.createApp({
             this.register.permission_id = this.permission_id;
             this.register.position_id = this.position_id;
 
-            axios.post('/admin/player', this.register)
+            axios.post('/admin/member', this.register)
                 .then(response => {
                     this.register = {};
                     this.permission_id = 0;
@@ -80,7 +82,7 @@ Vue.createApp({
                     this.toggleAlert('Failed to add  user', 'error');
                 });
         },
-        // update player info
+        // update member info
         save(row) {
             this.errors = {};
             if (!row.name) {
@@ -96,7 +98,7 @@ Vue.createApp({
                 return;
             }
             row.permission_id = this.permission_id;
-            axios.put('/admin/player/' + row.id, row)
+            axios.put('/admin/member/' + row.id, row)
                 .then(response => {
                     this.permission_id = 0;
                     this.toggleAlert(response.data.message);
@@ -114,7 +116,7 @@ Vue.createApp({
             if (!confirm('Are you sure you want to delete user?')) {
                 return;
             }
-            axios.delete('/admin/player/' + id)
+            axios.delete('/admin/member/' + id)
                 .then(response => {
                     this.toggleAlert(response.data.message);
                     this.load(this.response.current_page);
@@ -162,9 +164,9 @@ Vue.createApp({
         clickPageLink(page) {
             this.load(page);
         },
-        // load player list
+        // load member list
         load(page) {
-            axios.post(`/admin/player/search?page=${page}`, this.filters)
+            axios.post(`/admin/member/search?page=${page}`, this.filters)
                 .then(response => {
                     console.log(response);
                     this.response = response.data;
@@ -179,4 +181,4 @@ Vue.createApp({
     mounted() {
         this.load(1);
     },
-}).mount('#player-index');
+}).mount('#member-index');

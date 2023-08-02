@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('img_url')->nullable();
             $table->unsignedBigInteger('position_id')->nullable();
+            $table->text('desc')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

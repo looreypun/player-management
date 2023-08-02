@@ -311,12 +311,12 @@ return [
             'icon'       => 'fa fa-chart-line',
             'url'  => 'admin/dashboard',
         ],
-        'PLAYER INFO SECTION',
+        'MEMBER INFO SECTION',
         [
-            'text'      => 'PLAYERS',
+            'text'      => 'MEMBERS',
             'icon'       => 'fa fa-users',
             'guard'      => 'all_allow|admins.index',
-            'url'      => 'admin/player',
+            'url'      => 'admin/member',
         ],
         [
             'text'      => 'CONTRIBUTION',

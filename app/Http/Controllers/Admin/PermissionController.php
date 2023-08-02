@@ -25,8 +25,8 @@ class PermissionController extends Controller
      */
     public function list(): JsonResponse
     {
-        $positions = Permission::all();
-        return response()->json($positions);
+        $permissions = Permission::all();
+        return response()->json($permissions);
     }
 
     /**
@@ -36,12 +36,12 @@ class PermissionController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $player = new Permission();
-        $player->fill([
+        $permission = new Permission();
+        $permission->fill([
             'name' => $request->name,
             'guard_name' => 'web'
         ]);
-        $player->save();
+        $permission->save();
 
         return response()->json(['message' => 'Permission Added Successfully']);
     }
@@ -54,9 +54,9 @@ class PermissionController extends Controller
      */
     public function update($id, Request $request): JsonResponse
     {
-        $player = Permission::find($id);
-        $player->fill($request->all());
-        $player->save();
+        $permission = Permission::find($id);
+        $permission->fill($request->all());
+        $permission->save();
 
         return response()->json(['message' => 'Permission info updated']);
     }

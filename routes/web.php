@@ -21,9 +21,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::redirect('/', '/admin/dashboard');
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home');
 
-    //player
-    Route::resource('/player', App\Http\Controllers\Admin\PlayerController::class);
-    Route::post('/player/search', [App\Http\Controllers\Admin\PlayerController::class, 'search'])->name('admin.player.search');
+    //member
+    Route::resource('/member', App\Http\Controllers\Admin\MemberController::class);
+    Route::post('/member/search', [App\Http\Controllers\Admin\MemberController::class, 'search'])->name('admin.member.search');
 
     //position
     Route::resource('/position', App\Http\Controllers\Admin\PositionController::class);

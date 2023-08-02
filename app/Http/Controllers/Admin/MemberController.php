@@ -11,21 +11,21 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Hash;
 
-class PlayerController extends Controller
+class MemberController extends Controller
 {
     /**
-     * player list
+     * member list
      * @return View
      */
     public function index(): View
     {
         $positions = Position::all();
         $permissions = Permission::all();
-        return view('admin.player.index', compact('positions', 'permissions'));
+        return view('admin.member.index', compact('positions', 'permissions'));
     }
 
     /**
-     * player search
+     * member search
      * @param Request $request
      * @return JsonResponse
      */
@@ -38,14 +38,14 @@ class PlayerController extends Controller
     }
 
     /**
-     * add player
+     * add member
      * @param Request $request
      * @return JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
-        $player = new User();
-        $player->fill([
+        $member = new User();
+        $member->fill([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -54,41 +54,41 @@ class PlayerController extends Controller
             'position_id' => $request->position_id,
             'img_url' => $request->img_url
         ]);
-        $player->save();
-        $player->givePermissionTo($request->permission_id);
+        $member->save();
+        $member->givePermissionTo($request->permission_id);
 
-        return response()->json(['message' => 'Player Added Successfully']);
+        return response()->json(['message' => 'Member Added Successfully']);
     }
 
     /**
-     * update player info
+     * update member info
      * @param $id
      * @param Request $request
      * @return JsonResponse
      */
     public function update($id, Request $request): JsonResponse
     {
-        $player = User::find($id);
-        $player->fill($request->all());
-        $player->save();
+        $member = User::find($id);
+        $member->fill($request->all());
+        $member->save();
 
-        $player->permissions()->detach();
-        $player->givePermissionTo($request->permission_id);
+        $member->permissions()->detach();
+        $member->givePermissionTo($request->permission_id);
 
-        return response()->json(['message' => 'Player info updated']);
+        return response()->json(['message' => 'Member info updated']);
     }
 
     /**
-     * delete player info
+     * delete member info
      * @param $id
      * @return JsonResponse
      */
     public function destroy($id): JsonResponse
     {
-        $user = User::find($id);
-        $user->permissions()->detach();
-        $user->delete();
+        $member = User::find($id);
+        $member->permissions()->detach();
+        $member->delete();
 
-        return response()->json(['message' => 'Player info deleted']);
+        return response()->json(['message' => 'Member info deleted']);
     }
 }

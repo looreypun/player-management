@@ -1,14 +1,14 @@
 <!-- adminlte::pageを継承 -->
 @extends('adminlte::page')
 
-@section('title', 'Players')
+@section('title', 'Members')
 
 @section('content_header')
-  <h1>PLAYERS</h1>
+  <h1>Members</h1>
 @stop
 
 @section('content')
-    <div id="player-index" v-cloak>
+    <div id="member-index" v-cloak>
         {{-- メッセージ --}}
         <div v-if="showAlert" v-bind:class="'alert-'+alertType" class="alert alert-dismissible card sticky-top">
             <button type="button" class="close" data-dismiss="alert" @click="toggleAlert('', 'dismiss')" aria-hidden="true">×</button>
@@ -21,7 +21,7 @@
                 <div class="card-body small row">
                     <div class="col-md-4 form-group">
                         <label for="title">Name</label>
-                        <input type="text" class="form-control" name="name" v-model="filters.name" placeholder="Player Name" autocomplete="off" />
+                        <input type="text" class="form-control" name="name" v-model="filters.name" placeholder="Member Name" autocomplete="off" />
                         <input style="border:none; outline:none" readonly type="text" name="" id="">
                     </div>
                     <div class="col-md-4 form-group">
@@ -44,13 +44,13 @@
             <div class="card">
                 <div class="card-header">
                     <button type="button" class="btn btn-success btn-sm float-right" data-toggle="modal" data-target="#register" @click="register = {}">
-                        <i class="fas fa-fw fa-plus"></i> Add Player
+                        <i class="fas fa-fw fa-plus"></i> Add Member
                     </button>
                 </div>
 
                 <template v-if="success">
                     <div v-if="!response.data.length" class="card-body p-0">
-                        <p class="p-3">NO PLAYER</p>
+                        <p class="p-3">NO MEMBER</p>
                     </div>
                     <template v-else>
                         <div class="card-body p-0 table-responsive">
@@ -158,7 +158,7 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header bg-danger">
-                                <h5 class="modal-title text-end">ADD PLAYER</h5>
+                                <h5 class="modal-title text-end">ADD MEMBER</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -224,6 +224,6 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/admin/player/index.js') . '?' . md5_file('js/admin/player/index.js') }}"></script>
+    <script src="{{ asset('js/admin/member/index.js') . '?' . md5_file('js/admin/member/index.js') }}"></script>
 @stop
 

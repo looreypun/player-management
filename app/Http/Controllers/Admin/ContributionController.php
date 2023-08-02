@@ -57,9 +57,9 @@ class ContributionController extends Controller
      */
     public function update($id, Request $request): JsonResponse
     {
-        $player = Contribution::find($id);
-        $player->fill($request->all());
-        $player->save();
+        $contribution = Contribution::find($id);
+        $contribution->fill($request->all());
+        $contribution->save();
 
         return response()->json(['message' => 'Contribution info updated successfully']);
     }
@@ -74,6 +74,6 @@ class ContributionController extends Controller
         $user = Contribution::find($id);
         $user->delete();
 
-        return response()->json(['message' => 'Contribution info deleted']);
+        return response()->json(['message' => 'Contribution info deleted successfully']);
     }
 }
