@@ -1,0 +1,48 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cache Composer Dependencies
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-
+
+      - name: Cache NPM Dependencies
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: Build Assets (if needed)
+        run: npm install && npm run build
+
+      - name: Deploy to Server
+        uses: appleboy/scp-action@master
+        with:
+          host: 206.189.32.15
+          username: loorey
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: ./
+          target: /var/www/html/redzone/
+          strip_components: 1
+
+      - name: Set Permissions on Server
+        run: |
+          ssh loorey@206.189.32.15 "cd /var/www/html/redzone && chmod -R 775 storage bootstrap/cache"
