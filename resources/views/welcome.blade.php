@@ -12,7 +12,7 @@
             <div class="col-md-6">
                 <div class="card text-center">
                     <div class="card-header bg-danger">
-                        <h2 class="text-light">Welcome to Redzone dev</h2>
+                        <h2 class="text-light">Welcome to Redzone DEVELOP</h2>
                     </div>
                     <div class="card-body">
                         <p>Hello there! This is a welcome page of Redzone.</p>
