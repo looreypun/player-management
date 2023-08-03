@@ -33,6 +33,7 @@ jobs:
             echo "Error: Unknown branch"
             exit 1
           fi
+          echo "Deploying to $WORK_DIR"
 
       - name: Connect to server, Git pull and Install Node.js Dependencies
         run: |
