@@ -25,12 +25,10 @@ class AppServiceProvider extends ServiceProvider
         // Get the APP_URL from the .env file
         $appUrl = config('app.url');
 
-        // Check if the environment has '/redzone-dev' in the APP_URL and set the base URL accordingly
-        if (!str_contains($appUrl, '/redzone-dev')) {
-            config(['app.url' => $appUrl]);
+        if (str_ends_with($appUrl, '/redzone-dev')) {
+            $this->app['url']->setBaseUrl($appUrl . '/redzone-dev');
         } else {
-            // Set the default base URL for the main application (without '/dev')
-            config(['app.url' => rtrim($appUrl, '/').'/redzone-dev']);
+            $this->app['url']->setBaseUrl($appUrl);
         }
     }
 }
