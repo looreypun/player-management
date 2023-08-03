@@ -1,48 +1,31 @@
-name: Deploy to Server
+name: Redzone Auto Deploy
 
 on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   deploy:
+    name: Deploy Redzone Project
     runs-on: ubuntu-latest
 
     steps:
-      - name: Cache Composer Dependencies
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: composer-${{ hashFiles('composer.lock') }}
-          restore-keys: composer-
-
-      - name: Cache NPM Dependencies
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
-
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Dependencies
-        run: composer install
-
-      - name: Build Assets (if needed)
-        run: npm install && npm run build
-
-      - name: Deploy to Server
-        uses: appleboy/scp-action@master
-        with:
-          host: 206.189.32.15
-          username: loorey
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: ./
-          target: /var/www/html/redzone/
-          strip_components: 1
-
-      - name: Set Permissions on Server
+      - name: Install SSH keys
         run: |
-          ssh loorey@206.189.32.15 "cd /var/www/html/redzone && chmod -R 775 storage bootstrap/cache"
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Connect to server, Git pull and Install Node.js Dependencies
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git pull"
+          npm install && npm run build
+      - name: Run server_deploy.sh script
+        run: |
+          './server_deploy.sh'
