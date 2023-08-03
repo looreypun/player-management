@@ -38,3 +38,10 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_DEVELOP}} && git branch && git pull && ./server_deploy.sh"
+
+      - name: Send Notification
+        if: always()  # This step will run even if the previous steps fail
+        env:
+          GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}  # Add your webhook secret as a GitHub secret
+        run: |
+          curl -X POST -H "Content-Type: application/json" -d '{"text": "Redzone Project deployment is finished!"}' $GOOGLE_CHAT_WEBHOOK
