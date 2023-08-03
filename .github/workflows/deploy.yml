@@ -23,22 +23,22 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Set WORK_DIR based on branch
+      - name: Check branch name
         run: |
-          if [ "${GITHUB_REF}" == "refs/heads/master" ]; then
-            WORK_DIR="${{ secrets.WORK_DIR_MASTER }}"
-          elif [ "${GITHUB_REF}" == "refs/heads/develop" ]; then
-            WORK_DIR="${{ secrets.WORK_DIR_DEVELOP }}"
-          else
-            echo "Error: Unknown branch"
-            exit 1
-          fi
-          echo "Deploying to $WORK_DIR"
+          echo "Branch name: ${{ github.ref }}"
 
-      - name: Connect to server, Git pull and Install Node.js Dependencies
+      - name: Connect to server, Git pull, and Install Node.js Dependencies (Master)
+        if: github.ref == 'refs/heads/master'
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd $WORK_DIR && git pull"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_MASTER}} && git pull"
           npm install && npm run build
+
+      - name: Connect to server, Git pull, and Install Node.js Dependencies (Develop)
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_DEVELOP}} && git pull"
+          npm install && npm run build
+
       - name: Run server_deploy.sh script
         run: |
           './server_deploy.sh'
