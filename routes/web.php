@@ -14,11 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/', 'welcome');
+Route::get('/admin', function(){
+    return redirect()->route('admin.home');
+});
 
 Auth::routes();
 
 Route::prefix('admin')->middleware(['auth'])->group(function(){
-    Route::redirect('/', '/admin/dashboard');
+    //dashboard
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home');
 
     //member

@@ -68,7 +68,7 @@ Vue.createApp({
             this.register.permission_id = this.permission_id;
             this.register.position_id = this.position_id;
 
-            axios.post('/admin/member', this.register)
+            axios.post(baseUrl + '/admin/member', this.register)
                 .then(response => {
                     this.register = {};
                     this.permission_id = 0;
@@ -98,7 +98,7 @@ Vue.createApp({
                 return;
             }
             row.permission_id = this.permission_id;
-            axios.put('/admin/member/' + row.id, row)
+            axios.put(baseUrl + '/admin/member/' + row.id, row)
                 .then(response => {
                     this.permission_id = 0;
                     this.toggleAlert(response.data.message);
@@ -116,7 +116,7 @@ Vue.createApp({
             if (!confirm('Are you sure you want to delete user?')) {
                 return;
             }
-            axios.delete('/admin/member/' + id)
+            axios.delete(baseUrl + '/admin/member/' + id)
                 .then(response => {
                     this.toggleAlert(response.data.message);
                     this.load(this.response.current_page);
@@ -166,7 +166,7 @@ Vue.createApp({
         },
         // load member list
         load(page) {
-            axios.post(`/admin/member/search?page=${page}`, this.filters)
+            axios.post(baseUrl + `/admin/member/search?page=${page}`, this.filters)
                 .then(response => {
                     console.log(response);
                     this.response = response.data;

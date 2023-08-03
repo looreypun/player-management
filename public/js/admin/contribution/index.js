@@ -38,7 +38,7 @@ Vue.createApp({
                 return;
             }
 
-            axios.post('/admin/contribution', this.register)
+            axios.post(baseUrl + '/admin/contribution', this.register)
                 .then(response => {
                     this.register = {};
                     this.toggleAlert(response.data.message);
@@ -64,7 +64,7 @@ Vue.createApp({
                 return;
             }
 
-            axios.put('/admin/contribution/' + row.id, row)
+            axios.put(baseUrl + '/admin/contribution/' + row.id, row)
                 .then(response => {
                     this.toggleAlert(response.data.message);
                     row.edit_mode = false;
@@ -81,7 +81,7 @@ Vue.createApp({
             if (!confirm('Are you sure you want to delete data?')) {
                 return;
             }
-            axios.delete('/admin/contribution/' + id)
+            axios.delete(baseUrl + '/admin/contribution/' + id)
                 .then(response => {
                     this.toggleAlert(response.data.message);
                     this.load();
@@ -121,7 +121,7 @@ Vue.createApp({
         },
         // load position list
         load(page) {
-            axios.post(`/admin/contribution/search?page=${page}`, this.filters)
+            axios.post(baseUrl + `/admin/contribution/search?page=${page}`, this.filters)
                 .then(response => {
                     console.log(response);
                     this.response = response.data;
