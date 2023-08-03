@@ -37,7 +37,7 @@ jobs:
 
       - name: Connect to server, Git pull and Install Node.js Dependencies
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git pull"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd $WORK_DIR && git pull"
           npm install && npm run build
       - name: Run server_deploy.sh script
         run: |
