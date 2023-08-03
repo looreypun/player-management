@@ -26,9 +26,7 @@ class AppServiceProvider extends ServiceProvider
         $appUrl = config('app.url');
 
         if (str_ends_with($appUrl, '/redzone-dev')) {
-            $this->app['url']->setBaseUrl($appUrl . '/redzone-dev');
-        } else {
-            $this->app['url']->setBaseUrl($appUrl);
+            $this->app['url']->forceRootUrl($appUrl . '/redzone-dev');
         }
     }
 }
