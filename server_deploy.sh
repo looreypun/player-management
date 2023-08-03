@@ -14,6 +14,9 @@ echo "Deploying application ..."
     # Clear cache
     php artisan optimize
 
+    # Install npm dependencies
+    npm install && npm run build
+
 # Exit maintenance mode
 php artisan up
 
