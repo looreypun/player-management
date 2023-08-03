@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - develop
   workflow_dispatch:
 
 jobs:
@@ -12,9 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Install SSH keys
         run: |
           mkdir -p ~/.ssh
@@ -22,10 +20,21 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Connect to server, Git pull and Install Node.js Dependencies
+      - name: Deploy Redzone Project
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Check branch name
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git pull"
-          npm install && npm run build
-      - name: Run server_deploy.sh script
+          echo "Branch name: ${{ github.ref }}"
+
+      - name: Connect to server, Git pull (Master)
+        if: github.ref == 'refs/heads/master'
         run: |
-          './server_deploy.sh'
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_MASTER}} && git branch && git pull && ./server_deploy.sh"
+
+      - name: Connect to server, Git pull (Develop)
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_DEVELOP}} && git branch && git pull && ./server_deploy.sh"
