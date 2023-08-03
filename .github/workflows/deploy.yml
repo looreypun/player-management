@@ -20,16 +20,21 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
+      - name: Deploy Redzone Project
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
       - name: Check branch name
         run: |
           echo "Branch name: ${{ github.ref }}"
 
-      - name: Connect to server, Git pull, and Install Node.js Dependencies (Master)
+      - name: Connect to server, Git pull (Master)
         if: github.ref == 'refs/heads/master'
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_MASTER}} && git checkout master && git branch && git pull && pwd && /var/www/html/redzone/server_deploy.sh"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_MASTER}} && git branch && git pull && ./server_deploy.sh"
 
-      - name: Connect to server, Git pull, and Install Node.js Dependencies (Develop)
+      - name: Connect to server, Git pull (Develop)
         if: github.ref == 'refs/heads/develop'
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_DEVELOP}} && git checkout develop && git branch && git pull && pwd && /var/www/html/redzone-dev/server_deploy.sh"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_DEVELOP}} && git branch && git pull && ./server_deploy.sh"

@@ -12,10 +12,9 @@ echo "Deploying application ..."
     # php artisan migrate --force
 
     # Clear cache
-    php artisan optimize
-
-    # Install npm dependencies
-    npm install && npm run build
+    php artisan config:cache
+    php artisan route:clear
+    php artisan view:clear
 
 # Exit maintenance mode
 php artisan up
