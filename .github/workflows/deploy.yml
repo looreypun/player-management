@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - develop
   workflow_dispatch:
 
 jobs:
@@ -21,6 +22,17 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Set WORK_DIR based on branch
+        run: |
+          if [ "${GITHUB_REF}" == "refs/heads/master" ]; then
+            export WORK_DIR="${{ secrets.WORK_DIR_MASTER }}"
+          elif [ "${GITHUB_REF}" == "refs/heads/develop" ]; then
+            export WORK_DIR="${{ secrets.WORK_DIR_DEVELOP }}"
+          else
+            echo "Error: Unknown branch"
+            exit 1
+          fi
 
       - name: Connect to server, Git pull and Install Node.js Dependencies
         run: |
