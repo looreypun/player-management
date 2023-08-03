@@ -27,14 +27,12 @@ jobs:
       - name: Connect to server, Git pull, and Install Node.js Dependencies (Master)
         if: github.ref == 'refs/heads/master'
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_MASTER}} && git checkout master && git branch && git pull"
-          cd ${{secrets.WORK_DIR_MASTER}} && npm install && npm run build
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_MASTER}} && git checkout master && git branch && git pull && npm install && npm run build"
 
       - name: Connect to server, Git pull, and Install Node.js Dependencies (Develop)
         if: github.ref == 'refs/heads/develop'
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_DEVELOP}} && git checkout develop && git branch && git pull"
-          cd ${{secrets.WORK_DIR_DEVELOP}} && npm install && npm run build
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{secrets.WORK_DIR_DEVELOP}} && git checkout develop && git branch && git pull && npm install && npm run build"
 
       - name: Run server_deploy.sh script
         run: |
