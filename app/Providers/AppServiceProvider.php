@@ -21,12 +21,5 @@ class AppServiceProvider extends ServiceProvider
     {
         // \URL::forceScheme('https');
         // $this->app['request']->server->set('HTTPS','on');
-
-        // Get the APP_URL from the .env file
-        $appUrl = config('app.url');
-
-        if (str_ends_with($appUrl, '/redzone-dev')) {
-            $this->app['url']->forceRootUrl($appUrl . '/redzone-dev');
-        }
     }
 }

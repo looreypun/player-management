@@ -18,7 +18,7 @@ Route::view('/', 'welcome');
 Auth::routes();
 
 Route::prefix('admin')->middleware(['auth'])->group(function(){
-    Route::redirect('/', '/admin/dashboard');
+    Route::redirect('/', env('APP_URL') . '/admin/dashboard');
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.home');
 
     //member

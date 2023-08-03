@@ -29,7 +29,7 @@ Vue.createApp({
                 return;
             }
 
-            axios.post('/admin/position', { name: this.position })
+            axios.post(baseUrl + '/admin/position', { name: this.position })
                 .then(response => {
                     this.toggleAlert(response.data.message);
                     this.load();
@@ -47,7 +47,7 @@ Vue.createApp({
                 this.errors.name = 'Enter position name';
                 return;
             }
-            axios.put('/admin/position/' + row.id, row)
+            axios.put(baseUrl + '/admin/position/' + row.id, row)
                 .then(response => {
                     this.toggleAlert(response.data.message);
                     row.edit_mode = false;
@@ -64,7 +64,7 @@ Vue.createApp({
             if (!confirm('Are you sure you want to delete position?')) {
                 return;
             }
-            axios.delete('/admin/position/' + id)
+            axios.delete(baseUrl + '/admin/position/' + id)
                 .then(response => {
                     this.toggleAlert(response.data.message);
                     this.load();
@@ -99,7 +99,7 @@ Vue.createApp({
         },
         // load position list
         load() {
-            axios.post(`/admin/position/list`)
+            axios.post(baseUrl + `/admin/position/list`)
                 .then(response => {
                     this.response = response.data;
                     this.success = true;

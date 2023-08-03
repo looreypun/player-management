@@ -29,7 +29,7 @@ Vue.createApp({
                 return;
             }
 
-            axios.post('/admin/permission', { name: this.permission })
+            axios.post(baseUrl + '/admin/permission', { name: this.permission })
                 .then(response => {
                     this.toggleAlert(response.data.message);
                     this.load();
@@ -47,7 +47,7 @@ Vue.createApp({
                 this.errors.name = 'Enter permission name';
                 return;
             }
-            axios.put('/admin/permission/' + row.id, row)
+            axios.put(baseUrl + '/admin/permission/' + row.id, row)
                 .then(response => {
                     this.toggleAlert(response.data.message);
                     row.edit_mode = false;
@@ -64,7 +64,7 @@ Vue.createApp({
             if (!confirm('Are you sure you want to delete permission?')) {
                 return;
             }
-            axios.delete('/admin/permission/' + id)
+            axios.delete(baseUrl + '/admin/permission/' + id)
                 .then(response => {
                     this.toggleAlert(response.data.message);
                     this.load();
@@ -99,7 +99,7 @@ Vue.createApp({
         },
         // load permission list
         load() {
-            axios.post(`/admin/permission/list`)
+            axios.post(baseUrl + `/admin/permission/list`)
                 .then(response => {
                     this.response = response.data;
                     console.log(this.response);
