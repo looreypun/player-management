@@ -19,6 +19,8 @@
         @yield('title_postfix', config('adminlte.title_postfix', ''))
     </title>
 
+    @vite('resources/css/app.css')
+
     {{-- Custom stylesheets (pre AdminLTE) --}}
     @yield('adminlte_css_pre')
 
@@ -72,7 +74,6 @@
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
     @endif
-
 </head>
 
 <body class="@yield('classes_body')" @yield('body_data')>
@@ -104,6 +105,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js" integrity="sha512-2V49R8ndaagCOnwmj8QnbT1Gz/rie17UouD9Re5WxbzRVUGoftCu5IuqqtAM9+UC3fwfHCSJR1hkzNQh/2wdtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="{{ asset('js/pagination.js') }}"></script>
+    <script src="{{ asset('js/calendar.js') }}"></script>
     <script>
         window.baseUrl = "{{ request()->root() }}";
     </script>
