@@ -58,12 +58,10 @@
                                 <thead class="small">
                                     <tr>
                                         <th>NAME</th>
-                                        <th>EMAIL</th>
                                         <th>PHONE</th>
                                         <th>AGE</th>
                                         <th>POSITION</th>
                                         <th>PERMISSION</th>
-                                        <th>IMAGE</th>
                                         <th>ACTION</th>
                                     </tr>
                                 </thead>
@@ -123,13 +121,22 @@
                                         </template>
 
                                         <template v-else>
-                                            <td>@{{ row.name }}</td>
-                                            <td>@{{ row.email }}</td>
+                                            <td>
+                                                <div class="d-flex text-sm">
+                                                    <div class="mr-3">
+                                                        <img height="40" width="40" class="rounded-circle" :src="row.img_url" alt="profile image" />
+                                                        <div class="rounded-circle" aria-hidden="true"></div>
+                                                    </div>
+                                                    <div>
+                                                        <p class="fw-bold m-0">@{{ row.name }}</p>
+                                                        <p class="text-xs text-secondary m-0">@{{ row.email }}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td>@{{ row.phone }}</td>
                                             <td>@{{ calculateAge(row.age) }}</td>
                                             <td>@{{ row.position }}</td>
                                             <td>@{{ row.permissions[0]?.name }}</td>
-                                            <td><img :src="row.img_url" class="img-thumbnail rounded" alt="user image" style="height:30px; width:30px"></td>
                                             <td class="text-nowrap">
                                                 <button :disabled="editMode" type="button" class="btn btn-info btn-sm mr-2" @click="edit(row)">
                                                     <i class="fas fa-fw fa-edit"></i> Edit
