@@ -311,7 +311,6 @@ return [
             'icon'       => 'fa fa-chart-line',
             'url'  => 'admin/dashboard',
         ],
-        'MEMBER INFO SECTION',
         [
             'text'      => 'MEMBERS',
             'icon'       => 'fa fa-users',
@@ -324,7 +323,6 @@ return [
             'guard'      => 'all_allow|admins.index',
             'url'      => 'admin/contribution',
         ],
-        'CONFIGURATION SECTION',
         [
             'text'    => 'CONFIGURATION',
             'icon'       => 'fa fa-cog',
@@ -345,6 +343,29 @@ return [
                     'active' => ['admin/permission', 'admin/permission/*'],
                     'guard'      => 'all_allow|admins.index',
                     'url'      => 'admin/permission',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'FUTSAL',
+            'icon'       => 'fa fa-futbol',
+            'active' => [],
+            'permission' => [
+                'ADMIN'
+            ],
+            'submenu' => [
+                [
+                    'text'      => 'TOURNAMENT',
+                    'icon'       => 'fa fa-medal',
+                    'active' => ['admin/tournament', 'admin/tournament/*'],
+                    'guard'      => 'all_allow|admins.index',
+                    'url'      => 'admin/tournament',
+                ],                [
+                    'text'      => 'LEAGUE',
+                    'icon'       => 'fa fa-trophy',
+                    'active' => ['admin/league', 'admin/league/*'],
+                    'guard'      => 'all_allow|admins.index',
+                    'url'      => 'admin/league',
                 ],
             ],
         ]
