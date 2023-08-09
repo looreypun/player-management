@@ -41,5 +41,5 @@ Route::prefix('admin')->middleware(['auth'])->group(function(){
     Route::post('/contribution/search', [App\Http\Controllers\Admin\ContributionController::class, 'search'])->name('admin.contribution.search');
 
     // profile
-    Route::get('/playerInfo', [App\Http\Controllers\Admin\ProfileController::class, 'playerInfo'])->name('admin.player.profile');
+    Route::get('/profile/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('admin.member.profile');
 });

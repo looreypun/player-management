@@ -128,7 +128,7 @@
                                                         <div class="rounded-circle" aria-hidden="true"></div>
                                                     </div>
                                                     <div>
-                                                        <p class="fw-bold m-0">@{{ row.name }}</p>
+                                                        <p class="fw-bold m-0"><a :href="'profile/' + row.id"> @{{ row.name }}</a></p>
                                                         <p class="text-xs text-secondary m-0">@{{ row.email }}</p>
                                                     </div>
                                                 </div>
